@@ -35,7 +35,7 @@
         "properties": {
           "buildTimeoutInMinutes": 30,
           "vmProfile": {
-            "vmSize": "B1s",
+            "vmSize": "Standard_B1s",
             "osDiskSizeGB": 127
           },
           "source": {
