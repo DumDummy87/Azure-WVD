@@ -22,7 +22,7 @@
         "dependsOn": [],
         "tags": {
           "imagebuilderTemplate": "win10multi",
-          "SKU": "<SKUName>"
+          "SKU": "<SKUName>",
           "userIdentity": "enabled"
         },
         "identity": {
