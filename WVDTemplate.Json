@@ -52,8 +52,18 @@
               "inline": [
                 "New-Item -Type Directory -Path 'c:\\' -Name temp",
                 "invoke-webrequest -uri 'https://aka.ms/downloadazcopy-v10-windows' -OutFile 'c:\\temp\\azcopy.zip'",
-                "Expand-Archive 'c:\\temp\\azcopy.zip' 'c:\\temp'",
+                "Expand-Archive 'c:\\temp\\azcopy.zip' 'c:\\temp\\azCopy'",
                 "copy-item 'C:\\temp\\azcopy_windows_amd64_*\\azcopy.exe\\' -Destination 'c:\\temp'"
+              ]
+            },
+            {
+              "type": "PowerShell",
+              "name": "installFXLogix",
+              "inline": [
+                "New-Item -Type Directory -Path 'c:\\' -Name temp",
+                "invoke-webrequest -uri 'https://aka.ms/fslogix_download' -OutFile 'c:\\temp\\FSlogix.zip'",
+                "Expand-Archive 'c:\\temp\\FSlogix.zip' 'c:\\temp\\fsLogix'",
+                "Start-Process -FilePath 'c:\\temp\fsLogix\\x64\\Release\\FSLogixAppsSetup.exe' -ArgumentList '/quiet'"
               ]
             },
             {
@@ -61,7 +71,7 @@
               "runElevated": true,
               "name": "DeprovisioningScript",
               "inline": [
-                "((Get-Content -path C:\DeprovisioningScript.ps1 -Raw) -replace 'Sysprep.exe /oobe /generalize /quiet /quit','Sysprep.exe /oobe /generalize /quit /mode:vm' ) | Set-Content -Path C:\DeprovisioningScript.ps1"
+                "((Get-Content -path C:\\DeprovisioningScript.ps1 -Raw) -replace 'Sysprep.exe /oobe /generalize /quiet /quit','Sysprep.exe /oobe /generalize /quit /mode:vm' ) | Set-Content -Path C:\\DeprovisioningScript.ps1"
               ]
             }
           ],
