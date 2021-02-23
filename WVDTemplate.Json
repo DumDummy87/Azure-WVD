@@ -22,18 +22,18 @@
         "dependsOn": [],
         "tags": {
           "imagebuilderTemplate": "win10multi",
-          "SKU": "<skuName>",
-          "Version": "<version>",
+          "SKU": "20h2-evd",
+          "Version": "19042.746.2101092352>",
           "userIdentity": "enabled"
         },
         "identity": {
           "type": "UserAssigned",
           "userAssignedIdentities": {
-            "<imgBuilderId>": {}
+            "/subscriptions/2e3839c8-c7f1-4b68-9741-5fc1371b25c5/resourcegroups/rg-aib-prd/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzureImageBuilder1613646132": {}
           }
         },
         "properties": {
-          "buildTimeoutInMinutes": 30,
+          "buildTimeoutInMinutes": 60,
           "vmProfile": {
             "vmSize": "Standard_B1s",
             "osDiskSizeGB": 127
@@ -42,19 +42,30 @@
             "type": "PlatformImage",
             "publisher": "MicrosoftWindowsDesktop",
             "offer": "Windows-10",
-            "sku": "<skuName>",
+            "sku": "20h2-evd",
             "version": "latest"
           },
           "customize": [
             {
-              "type": "PowerShell",
-              "name": "installChocolatey",
-              "inline": [
-                "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))",
-                "choco install adobereader -y",
-                "choco install jre8 -y",
-                "choco install vcredist140 -y"
-              ]
+                "type": "PowerShell",
+                "name": "InstallStuff",
+                "inline": [
+                    "Set-ExecutionPolicy Bypass -Scope Process -Force",
+                    "Install-PackageProvider -Name NuGet -Force",
+                    "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted",
+                    "Install-Module -Name Carbon -Force",
+                    "Import-Module -Name Carbon -Force",
+                    "Install-Module pswindowsupdate -force",
+                    "Import-Module pswindowsupdate -force",
+                    "Install-WindowsUpdate -AcceptAll -IgnoreReboot",
+                    "Set-ExecutionPolicy Bypass -Scope Process -Force",
+                    "Get-ChildItem -Path C:\\buildArtifacts -Filter *.msi -Recurse | ForEach-Object {Install-CMsi $_.FullName}",
+                    "Invoke-WebRequest https://chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression",
+                    "choco install adobereader -y",
+                    "choco install adobereader -y",
+                    "choco install jre8 -y",
+                    "choco install vcredist140 -y"
+                ]
             },
             {
               "type": "PowerShell",
@@ -78,9 +89,9 @@
           "distribute": [
             {
               "type": "ManagedImage",
-              "imageId": "/subscriptions/<subscriptionID>/resourceGroups/<rgName>/providers/Microsoft.Compute/images/<imageName>",
-              "location": "<region>",
-              "runOutputName": "<runOutputName>",
+              "imageId": "/subscriptions/2e3839c8-c7f1-4b68-9741-5fc1371b25c5/resourceGroups/rg-aib-prd/providers/Microsoft.Compute/images/aibWin10V1",
+              "location": "westeurope",
+              "runOutputName": "win10Client",
               "artifactTags": {
                 "source": "azVmImageBuilder",
                 "baseosimg": "windows10Multi"
