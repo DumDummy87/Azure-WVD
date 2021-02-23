@@ -61,10 +61,25 @@
                     "Set-ExecutionPolicy Bypass -Scope Process -Force",
                     "Get-ChildItem -Path C:\\buildArtifacts -Filter *.msi -Recurse | ForEach-Object {Install-CMsi $_.FullName}",
                     "Invoke-WebRequest https://chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression",
-                    "choco install adobereader -y",
-                    "choco install adobereader -y",
                     "choco install jre8 -y",
-                    "choco install vcredist140 -y"
+                    "choco install vcredist140 -y",
+                    "choco install vcredist2013",
+                    "choco install vcredist2010",
+                    "choco install vcredist2008"
+
+                    
+                ]
+            },
+            {
+                "type": "WindowsRestart",
+                "restartCheckCommand": "echo Azure-Image-Builder-Restarted-the-VM  > c:\\buildArtifacts\\azureImageBuilderRestart.txt",
+                "restartTimeout": "5m"
+            },
+            {
+                "type": "PowerShell",
+                "name": "InstallStuff",
+                "inline": [
+                    "choco install adobereader -y"
                 ]
             },
             {
@@ -102,3 +117,11 @@
       }
     ]
   }
+
+
+
+
+
+
+
+
