@@ -47,6 +47,16 @@
           },
           "customize": [
             {
+              "type": "PowerShell",
+              "name": "GetAzCopy",
+              "inline": [
+                "New-Item -Type Directory -Path 'c:\\' -Name temp",
+                "invoke-webrequest -uri 'https://aka.ms/downloadazcopy-v10-windows' -OutFile 'c:\\temp\\azcopy.zip'",
+                "Expand-Archive 'c:\\temp\\azcopy.zip' 'c:\\temp'",
+                "copy-item 'C:\\temp\\azcopy_windows_amd64_*\\azcopy.exe\\' -Destination 'c:\\temp'"
+              ]
+            },
+            {
                 "type": "PowerShell",
                 "name": "InstallStuff",
                 "inline": [
@@ -66,8 +76,6 @@
                     "choco install vcredist2013",
                     "choco install vcredist2010",
                     "choco install vcredist2008"
-
-                    
                 ]
             },
             {
