@@ -29,7 +29,7 @@
         "identity": {
           "type": "UserAssigned",
           "userAssignedIdentities": {
-            "/subscriptions/2e3839c8-c7f1-4b68-9741-5fc1371b25c5/resourcegroups/rg-aib-prd/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzureImageBuilder1613646132": {}
+            "/subscriptions/2e3839c8-c7f1-4b68-9741-5fc1371b25c5/resourcegroups/rg-aib-prd/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzureImageBuilder1614594561": {}
           }
         },
         "properties": {
