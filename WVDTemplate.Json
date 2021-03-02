@@ -1,5 +1,5 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
       "imageTemplateName": {
@@ -29,7 +29,7 @@
         "identity": {
           "type": "UserAssigned",
           "userAssignedIdentities": {
-            "/subscriptions/2e3839c8-c7f1-4b68-9741-5fc1371b25c5/resourcegroups/rg-aib-prd/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzureImageBuilder1614594561": {}
+            "<imgBuilderId>": {}
           }
         },
         "properties": {
@@ -54,15 +54,6 @@
                 "invoke-webrequest -uri 'https://aka.ms/downloadazcopy-v10-windows' -OutFile 'c:\\temp\\azcopy.zip'",
                 "Expand-Archive 'c:\\temp\\azcopy.zip' 'c:\\temp'",
                 "copy-item 'C:\\temp\\azcopy_windows_amd64_*\\azcopy.exe\\' -Destination 'c:\\temp'"
-              ]
-            },
-            {
-              "type": "PowerShell",
-              "name": "InstallOffice",
-              "inline": [
-                "c:\\temp\\azcopy.exe copy 'https://azureblobsharedservice.blob.core.windows.net/software/microsoftoffice2016-32Bit.zip?sp=r&st=2021-02-25T10:15:39Z&se=2021-02-25T18:15:39Z&spr=https&sv=2020-02-10&sr=b&sig=4qU5dXSq8OgEZt1ggf7atkQCxTo0vjdQp8LyXLRX0jg%3D' 'c:\\temp\\microsoftoffice2016-32Bit.zip'",
-                "Expand-Archive 'C:\\temp\\microsoftoffice2016-32Bit.zip' 'c:\\temp\\microsoftoffice2016-32Bit'",
-                "Start-Process -FilePath 'C:\\temp\\microsoftoffice2016-32Bit\\Microsoft Office 2016 32-bits\\setup.exe' -argumentlist '/adminfile OfficeAdminFileWithPublisherAndAccess.MSP'"
               ]
             },
             {
